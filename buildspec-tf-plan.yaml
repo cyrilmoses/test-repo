@@ -24,4 +24,3 @@ artifacts:
     name: TerraformPlan
     files:
         - $STAGE-terraform.tfplan
-        - .terraform/modules/control_tower_account_factory/src/aft_lambda/*
