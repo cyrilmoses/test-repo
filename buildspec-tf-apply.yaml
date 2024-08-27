@@ -12,5 +12,4 @@ phases:
             - "terraform init --backend-config=\"bucket=$BUCKET\" --backend-config=\"key=$STAGE.tfstate\" --backend-config=\"region=$REGION\""
     build:
         commands:
-            - "cp $CODEBUILD_SRC_DIR_TerraformPlan/.terraform/modules/control_tower_account_factory/src/aft_lambda/*.zip .terraform/modules/control_tower_account_factory/src/aft_lambda/"
             - "terraform apply $STAGE-terraform.tfplan"
