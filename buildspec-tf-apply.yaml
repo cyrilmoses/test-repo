@@ -1,0 +1,16 @@
+version: 0.2
+
+phases:
+    install:
+        commands:
+            - "curl -s $TF_ZIP_URL -o terraform.zip"
+            - "unzip terraform.zip -d /usr/local/bin"
+            - "chmod 755 /usr/local/bin/terraform"
+            - "mv $CODEBUILD_SRC_DIR_TerraformPlan/$STAGE-terraform.tfplan ./$STAGE-terraform.tfplan"
+    pre_build:
+        commands:
+            - "terraform init --backend-config=\"bucket=$BUCKET\" --backend-config=\"key=$STAGE.tfstate\" --backend-config=\"region=$REGION\""
+    build:
+        commands:
+            - "cp $CODEBUILD_SRC_DIR_TerraformPlan/.terraform/modules/control_tower_account_factory/src/aft_lambda/*.zip .terraform/modules/control_tower_account_factory/src/aft_lambda/"
+            - "terraform apply $STAGE-terraform.tfplan"
